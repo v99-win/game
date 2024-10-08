@@ -34,6 +34,11 @@
       width: 100%;
       height: 100%;
       border: none;
+      position: absolute;
+    }
+
+    .container button {
+      position: absolute;
     }
     
   </style>
@@ -41,19 +46,42 @@
 </head>
 
 <body>
-  <div class="container">
+  <div class="container" >
     <iframe ></iframe>
+    <button onclick="onclicked()">Test</button>
   </div>
   <script type="text/javascript">
 
     (function(){
-      const url = `https://game.v9911.win${window.location.search}`;
+      let query = window.location.search;
+      if(query){
+        query += "&_iframe=v99-win.github.io"
+      }
+      else{
+        query = "?_iframe=v99-win.github.io"
+      }
+      const url = `https://v99h5.gcore.baiv8.com/${query}`;
       const web = document.querySelector("iframe");
 
       web.onload = function(){
+        console.log("web onload")
         
-        if('requestFullscreen' in web){
-          web.requestFullscreen()
+        web.contentWindow.window.requestFullscreen = function(){
+          console.log("...............requestFullscreen")
+        }
+      }
+
+//      document.domain = "v99-win.github.io"
+      web.src = url;
+
+    })();
+    
+    function onclicked(){
+        console.log("... onclicked ...")
+
+        const node = document.querySelector(".container")
+        if('requestFullscreen' in node){
+          node.requestFullscreen()
             .then(()=>{
               console.log("requestFullscreen success")
             })
@@ -61,12 +89,7 @@
               console.error("requestFullscreen failure")
             })
         }
-      }
-
-      
-      web.src = url;
-    })();
-    
+    }
   </script>
 </body>
 
