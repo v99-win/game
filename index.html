@@ -49,6 +49,21 @@
     (function(){
       const url = `https://game.v9911.win${window.location.search}`;
       const web = document.querySelector("iframe");
+
+      web.onload = function(){
+        
+        if('requestFullscreen' in web){
+          web.requestFullscreen()
+            .then(()=>{
+              console.log("requestFullscreen success")
+            })
+            .catch(()=>{
+              console.error("requestFullscreen failure")
+            })
+        }
+      }
+
+      
       web.src = url;
     })();
     
