@@ -49,48 +49,46 @@
 <body>
   <div class="container" >
     <iframe ></iframe>
-    <button onclick="onclicked()">Test</button>
   </div>
   <script type="text/javascript">
 
     (function(){
       let query = window.location.search;
       if(query){
-        query += "&_iframe=v99-win.github.io"
+        query += "&_iframe=true"
       }
       else{
-        query = "?_iframe=v99-win.github.io"
+        query = "?_iframe=true"
       }
-      const url = `https://v99h5.gcore.baiv8.com/${query}`;
+      const url = `https://game.v9910.win/index.d.html${query}`;
       const web = document.querySelector("iframe");
 
       web.onload = function(){
         console.log("web onload")
-        
-        web.contentWindow.window.requestFullscreen = function(){
-          console.log("...............requestFullscreen")
-        }
       }
 
-//      document.domain = "v99-win.github.io"
       web.src = url;
+
+      window.addEventListener("message", function(e){
+        console.log("parent message")
+        console.log(e)
+        if(e.data == "_requestFullscreen"){
+          document.body.requestFullscreen();
+        }
+        if(e.data == "_exitFullscreen"){
+          document.exitFullscreen();
+        }
+      })
+	  
+      window.addEventListener('resize', (ev)=>{
+        const w = window.innerWidth
+        const h = window.innerHeight
+        web.style.width = `${w}px`
+        web.style.height = `${h}px`
+      })
 
     })();
     
-    function onclicked(){
-        console.log("... onclicked ...")
-
-        const node = document.querySelector(".container")
-        if('requestFullscreen' in node){
-          node.requestFullscreen()
-            .then(()=>{
-              console.log("requestFullscreen success")
-            })
-            .catch(()=>{
-              console.error("requestFullscreen failure")
-            })
-        }
-    }
   </script>
 </body>
 
